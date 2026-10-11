@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Database,
   Workflow,
   BarChart3,
   Layers3,
   Network,
-  CheckCircle2,
   TrendingUp,
   FileSpreadsheet,
+  type LucideIcon,
 } from "lucide-react";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 export interface PipelineStageDef {
   number: string;
   name: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
   description: string;
   tools: string[];
   insight: string;
@@ -86,12 +86,6 @@ export function AnalyticsWorkflowSection() {
     if (timerRef.current) clearTimeout(timerRef.current);
     setActiveStage(stageNum);
     setIsPlaying(false);
-  };
-
-  const handleRestart = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setActiveStage(1);
-    setIsPlaying(true);
   };
 
   return (

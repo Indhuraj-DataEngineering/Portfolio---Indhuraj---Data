@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Code2,
   Database,
@@ -6,12 +6,13 @@ import {
   Sparkles,
   Workflow,
   CheckCircle2,
+  type LucideIcon,
 } from "lucide-react";
 
 export interface SkillCategoryDef {
   index: string;
   title: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
   description: string;
   tools: string[];
   telemetry: {

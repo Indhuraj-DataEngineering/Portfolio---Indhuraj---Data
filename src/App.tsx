@@ -8,7 +8,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   BarChart3,
-  BookOpen,
   Code2,
   Database,
   Download,
@@ -19,8 +18,6 @@ import {
   Mail,
   MapPin,
   Menu,
-  MessageSquareText,
-  Network,
   Phone,
   ShieldCheck,
   Sparkles,
@@ -65,26 +62,6 @@ const projects: Project[] = [
     stack: ["Python", "Pandas", "Scikit-learn", "Streamlit"],
     accent: "document",
   },
-];
-
-const skillGroups: {
-  title: string;
-  icon: LucideIcon;
-  tools: string[];
-}[] = [
-  { title: "Programming & analysis", icon: Code2, tools: ["Python", "Pandas", "NumPy", "Data cleaning", "Exploratory data analysis"] },
-  { title: "Databases", icon: Database, tools: ["SQL", "MySQL", "MySQL Workbench"] },
-  { title: "Visualization & reporting", icon: BarChart3, tools: ["Power BI", "DAX", "Microsoft Excel", "PivotTables", "Matplotlib", "Seaborn"] },
-  { title: "Statistics", icon: Sparkles, tools: ["Descriptive statistics", "Hypothesis testing"] },
-  { title: "Project tools", icon: Workflow, tools: ["Jupyter Notebook", "Scikit-learn", "Streamlit"] },
-];
-
-const pipelineStages = [
-  { name: "Sales records", icon: Database, description: "9,994 sales records", tools: ["Sales", "Profit", "Quantity"] },
-  { name: "Preparation", icon: Workflow, description: "Cleaned and organized", tools: ["Microsoft Excel"] },
-  { name: "Analysis", icon: BarChart3, description: "Performance and trends", tools: ["KPIs", "PivotTables"] },
-  { name: "Visualization", icon: Layers3, description: "Interactive exploration", tools: ["Charts", "Filters"] },
-  { name: "Reporting", icon: Network, description: "Business performance views", tools: ["Power BI", "DAX"] },
 ];
 
 const capabilities: { label: string; icon: LucideIcon }[] = [
@@ -926,24 +903,6 @@ function ProjectsSection() {
 }
 
 function PublicWorkSection() {
-  const [bookOpen, setBookOpen] = useState(false);
-  const bookDialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    const dialog = bookDialogRef.current;
-    if (!dialog) return;
-    if (bookOpen && !dialog.open) dialog.showModal();
-    if (!bookOpen && dialog.open) dialog.close();
-  }, [bookOpen]);
-
-  const handleOpenBook = () => {
-    setBookOpen(true);
-  };
-
-  const handleCloseBook = () => {
-    setBookOpen(false);
-  };
-
   return (
     <section className="section contributions-section" id="contributions">
       <SectionHeading eyebrow="Profiles & publications" title="Open source & writing." description="Find my public profile and published work." centered />

@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   FileText,
   ArrowUpRight,
   ShieldCheck,
-  RotateCcw,
-  Play,
-  Pause,
   AlertTriangle,
   Flame,
   Radio,
-  Cpu,
-  Power,
-  CheckCircle2,
+  type LucideIcon,
 } from "lucide-react";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
@@ -20,7 +15,7 @@ interface SensorDef {
   title: string;
   sensorType: string;
   detail: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
 }
 
 const sensorsList: SensorDef[] = [
@@ -54,23 +49,12 @@ const sensorsList: SensorDef[] = [
   },
 ];
 
-const simulationSteps = [
-  { step: 1, label: "Hazard Detection", desc: "Sensor threshold tripped by gas/smoke", icon: AlertTriangle },
-  { step: 2, label: "Arduino Logic", desc: "Microcontroller processes interrupt vector", icon: Cpu },
-  { step: 3, label: "Relay Trigger", desc: "Optocoupler energizes shutoff relay circuit", icon: Power },
-  { step: 4, label: "Valve Closure", desc: "Solenoid valve snaps closed within <150ms", icon: ShieldCheck },
-  { step: 5, label: "Flame Extinguished", desc: "LPG fuel supply cut; burner flame drops to zero", icon: CheckCircle2 },
-];
-
 export function StoveSafetySection() {
   const prefersReducedMotion = useReducedMotion();
 
   const [activeStep, setActiveStep] = useState<number>(1);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [activeSensor, setActiveSensor] = useState<string>("gas");
-  const [flameIntensity, setFlameIntensity] = useState<number>(1.0);
-  const [valveClosed, setValveClosed] = useState<boolean>(false);
-
   const simulationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Simulation choreography
@@ -93,32 +77,10 @@ export function StoveSafetySection() {
     };
   }, [activeStep, isPlaying, prefersReducedMotion]);
 
-  // Sync flame and valve state with step
-  useEffect(() => {
-    if (activeStep >= 5) {
-      setFlameIntensity(0);
-      setValveClosed(true);
-    } else if (activeStep === 4) {
-      setFlameIntensity(0.25);
-      setValveClosed(true);
-    } else {
-      setFlameIntensity(1.0);
-      setValveClosed(false);
-    }
-  }, [activeStep]);
-
   const handleReplay = () => {
     if (simulationTimerRef.current) clearTimeout(simulationTimerRef.current);
     setActiveStep(1);
-    setFlameIntensity(1.0);
-    setValveClosed(false);
     setIsPlaying(true);
-  };
-
-  const handleStepSelect = (step: number) => {
-    if (simulationTimerRef.current) clearTimeout(simulationTimerRef.current);
-    setActiveStep(step);
-    setIsPlaying(false);
   };
 
   const handleTriggerHazard = (sensorId: string) => {
