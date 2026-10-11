@@ -73,7 +73,7 @@ const capabilities: { label: string; icon: LucideIcon }[] = [
   { label: "Machine Learning", icon: Sparkles },
 ];
 
-type ContactState = "idle" | "success" | "unavailable" | "failure";
+type ContactState = "idle" | "success" | "email-draft" | "unavailable" | "failure";
 
 const createTapAudioUrl = () => {
   const sampleRate = 22050;
@@ -603,7 +603,7 @@ function Hero() {
       </div>
       <div className="hero__copy">
         <p className="hero__overline"><span className="eyebrow__line" />INDHURAJ L <span>/</span> DATA ANALYST</p>
-        <h1 id="hero-heading">Data<br /><em>Analyst.</em></h1>
+        <h1 id="hero-heading">Data<br /><em>Analyst</em></h1>
         <p className="hero__intro">Turning data into clear analysis, useful dashboards and informed decisions.</p>
         <a className="button button--light hero__explore" href="#projects">Explore my work <ArrowDownRight size={18} /></a>
       </div>
@@ -634,7 +634,7 @@ function AboutSection() {
           <div className="about-editorial__panel">
             <div className="about-editorial__intro about-editorial__reveal">
               <p className="about-editorial__eyebrow"><span /> A LITTLE ABOUT ME</p>
-              <h2>Finding clarity<br />in complex data.</h2>
+              <h2>Finding clarity<br />in complex data</h2>
               <p className="about-editorial__description">I’m Indhuraj L, an Agricultural Engineering graduate focused on Data Analytics and Data Science. I use Python, SQL, Excel, and Power BI to clean data, build dashboards, and turn complex information into practical business insights.</p>
               <a className="about-editorial__cta" href="#projects">Explore my work <ArrowUpRight size={17} aria-hidden="true" /></a>
             </div>
@@ -693,7 +693,7 @@ function TrainingProgramCard() {
 function MachineLearningSection() {
   return (
     <section className="section" id="machine-learning">
-      <SectionHeading eyebrow="Applied intelligence" title={<>Machine learning<br />& Gen AI.</>} description="A completed recommendation project, alongside clearly labelled ongoing AI training." />
+      <SectionHeading eyebrow="Applied intelligence" title={<>Machine learning<br />& Gen AI</>} description="A completed recommendation project, alongside clearly labelled ongoing AI training." />
       <div className="ml-layout">
         <article className="ml-feature reveal">
           <div className="ml-feature__copy">
@@ -874,7 +874,7 @@ function ProjectsSection() {
   return (
     <section className="section projects-section" id="projects">
       <FlowingBackdrop className="flowing-backdrop--projects" />
-      <SectionHeading eyebrow="Selected work" title="Featured projects." description="Three projects with their problem, contribution and tools as documented in my resume." />
+      <SectionHeading eyebrow="Selected work" title="Featured projects" description="Three projects with their problem, contribution and tools as documented in my resume." />
       <div className="project-controls" role="group" aria-label="Filter projects">
         {filters.map((item) => <button type="button" key={item} className={filter === item ? "filter-button is-active" : "filter-button"} aria-pressed={filter === item} onClick={() => handleFilterClick(item)}>{item}</button>)}
       </div>
@@ -905,7 +905,7 @@ function ProjectsSection() {
 function PublicWorkSection() {
   return (
     <section className="section contributions-section" id="contributions">
-      <SectionHeading eyebrow="Profiles & publications" title="Open source & writing." description="Find my public profile and published work." centered />
+      <SectionHeading eyebrow="Profiles & publications" title="Open source & writing" description="Find my public profile and published work." centered />
       <div className="contribution-panels">
         <article className="contribution-panel reveal">
           <div className="contribution-panel__head"><span><Github size={27} /></span><div><h3>GitHub</h3><p>Explore my profile and public work.</p></div></div>
@@ -924,7 +924,7 @@ function PublicWorkSection() {
 function ExperienceSection() {
   return (
     <section className="section experience-section" id="experience">
-      <SectionHeading eyebrow="Career & background" title="Experience & education." description="Internship experience and academic qualifications from my resume." />
+      <SectionHeading eyebrow="Career & background" title="Experience & education" description="Internship experience and academic qualifications from my resume." />
       <div className="experience-content">
         <div className="experience-intro">
           <h3 className="experience-content__heading">Internship experience</h3>
@@ -979,7 +979,7 @@ function ExperienceSection() {
 function LearningSection() {
   return (
     <section className="section learning-section" id="learning">
-      <SectionHeading eyebrow="Learning & credentials" title="Training, certification & languages." description="Course progress, certification and language proficiency as stated in my resume." centered />
+      <SectionHeading eyebrow="Learning & credentials" title="Training, certification & languages" description="Course progress, certification and language proficiency as stated in my resume." centered />
       <div className="resume-highlights-grid">
         <article className="resume-highlight reveal">
           <span className="resume-highlight__label">ONGOING PROGRAM</span>
@@ -1005,6 +1005,7 @@ function LearningSection() {
 
 function ContactSection() {
   const [state, setState] = useState<ContactState>("idle");
+  const [emailDraftUrl, setEmailDraftUrl] = useState("");
   const contactRef = useRef<HTMLElement>(null);
   const networkRef = useRef<SVGSVGElement>(null);
   const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT?.trim();
@@ -1050,12 +1051,22 @@ function ContactSection() {
 
   async function submitContact(values: ContactValues) {
     setState("idle");
+    setEmailDraftUrl("");
     if (values.website) {
       setState("unavailable");
       return;
     }
     if (!endpoint) {
-      setState("unavailable");
+      const subject = encodeURIComponent(`Portfolio enquiry from ${values.name}`);
+      const body = encodeURIComponent([
+        `Name: ${values.name}`,
+        `Email: ${values.email}`,
+        ...(values.service ? [`Service: ${values.service}`] : []),
+        "",
+        values.message,
+      ].join("\n"));
+      setEmailDraftUrl(`mailto:indhurajlakshmanan@gmail.com?subject=${subject}&body=${body}`);
+      setState("email-draft");
       return;
     }
     try {
@@ -1146,6 +1157,11 @@ function ContactSection() {
             <button className="button contact-submit contact-submit--editorial" type="submit" disabled={isSubmitting}><span>{isSubmitting ? "Sending…" : "Work with me"}</span>{isSubmitting ? <span className="loading-dot" /> : <ArrowRight size={16} />}</button>
             <p className={`form-status form-status--${state}`} role="status" aria-live="polite">
               {state === "success" && "Message delivered successfully."}
+              {state === "email-draft" && (
+                <>Your message is ready to send. Open your email app and press Send.{" "}
+                  <a href={emailDraftUrl}>Open email draft</a>
+                </>
+              )}
               {state === "unavailable" && "Your message couldn’t be sent right now. Please try again later."}
               {state === "failure" && "We couldn’t send your message. Please try again."}
             </p>
@@ -1249,14 +1265,14 @@ export default function App() {
         });
       });
 
-      gsap.fromTo(".pipeline-item", { autoAlpha: 0, y: 12 }, {
+      gsap.fromTo(".analytics-stage-pill", { autoAlpha: 0, y: 12 }, {
         autoAlpha: 1,
         y: 0,
         duration: 0.42,
         stagger: 0.11,
         ease: "power2.out",
         clearProps: "all",
-        scrollTrigger: { trigger: ".pipeline-flow", start: "top 78%", once: true },
+        scrollTrigger: { trigger: "#pipeline", start: "top 78%", once: true },
       });
 
       gsap.fromTo(".about-mosaic__item, .about-editorial__reveal, .about-editorial__expertise-card",

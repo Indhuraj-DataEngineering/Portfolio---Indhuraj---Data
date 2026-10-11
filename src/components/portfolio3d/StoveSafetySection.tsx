@@ -107,7 +107,7 @@ export function StoveSafetySection() {
               ENGINEERING PROJECT · HARDWARE PROTOTYPE
             </span>
             <h2 className="p3d-heading">
-              Smart multi-sensor<br />stove safety system.
+              Smart multi-sensor<br />stove safety system
             </h2>
             <p className="p3d-description">
               Developed and tested an integrated detection prototype with automatic electro-mechanical shutoff for LPG and biogas stoves. Engineered with fail-safe microcontrollers and multi-spectral sensors.

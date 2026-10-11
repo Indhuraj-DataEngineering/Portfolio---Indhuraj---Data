@@ -7,6 +7,8 @@ import {
   Network,
   TrendingUp,
   FileSpreadsheet,
+  Pause,
+  Play,
   type LucideIcon,
 } from "lucide-react";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
@@ -68,28 +70,58 @@ export function AnalyticsWorkflowSection() {
 
   const [activeStage, setActiveStage] = useState<number>(1);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isInView, setIsInView] = useState<boolean>(false);
+  const [isPageVisible, setIsPageVisible] = useState<boolean>(
+    () => typeof document !== "undefined" && document.visibilityState === "visible",
+  );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!isPlaying || prefersReducedMotion) return;
+    const syncPageVisibility = () => setIsPageVisible(document.visibilityState === "visible");
+    document.addEventListener("visibilitychange", syncPageVisibility);
+    return () => document.removeEventListener("visibilitychange", syncPageVisibility);
+  }, []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setIsInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, { threshold: 0.01 });
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isPlaying || prefersReducedMotion || !isInView || !isPageVisible) return;
 
     timerRef.current = setTimeout(() => {
       setActiveStage((prev) => (prev >= 5 ? 1 : prev + 1));
-    }, 3200);
+    }, 4500);
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [activeStage, isPlaying, prefersReducedMotion]);
+  }, [activeStage, isInView, isPageVisible, isPlaying, prefersReducedMotion]);
 
   const handleSelectStage = (stageNum: number) => {
-    if (timerRef.current) clearTimeout(timerRef.current);
     setActiveStage(stageNum);
     setIsPlaying(false);
   };
 
+  const selectedStage = pipelineStagesData[activeStage - 1];
+
   return (
     <section
+      ref={sectionRef}
       className="p3d-section"
       id="pipeline"
       aria-label="Sales analytics workflow: From sales data to clear insights"
@@ -105,7 +137,7 @@ export function AnalyticsWorkflowSection() {
             ANALYSIS WORKFLOW · END-TO-END PROCESS
           </span>
           <h2 className="p3d-heading p3d-heading--centered">
-            From sales data<br />to clear insights.
+            From sales data<br />to clear insights
           </h2>
           <p className="p3d-description p3d-description--centered">
             A workflow based on the Excel sales analysis and Power BI capstone in my portfolio. Transforming raw multi-dimensional commerce records into actionable executive intelligence.
@@ -127,6 +159,8 @@ export function AnalyticsWorkflowSection() {
                 onClick={() => handleSelectStage(stageNum)}
                 role="tab"
                 aria-selected={isActive}
+                aria-controls="analytics-stage-details"
+                id={`analytics-stage-tab-${stageNum}`}
               >
                 <div className="analytics-stage-top">
                   <span className="analytics-stage-num">{stage.number}</span>
@@ -139,6 +173,47 @@ export function AnalyticsWorkflowSection() {
               </button>
             );
           })}
+        </div>
+
+        <div className="analytics-workflow-controls">
+          <p className="analytics-workflow-status" aria-live="polite">
+            {prefersReducedMotion
+              ? "Select a stage to explore the workflow."
+              : !isPageVisible
+                ? "Playback pauses while this page is in the background."
+                : !isInView
+                  ? "Playback pauses while this section is offscreen."
+              : isPlaying
+                ? "Stages advance every 4.5 seconds while this section is visible."
+                : "Workflow paused. Select a stage or resume playback."}
+          </p>
+          {!prefersReducedMotion && (
+            <button
+              className="analytics-workflow-toggle"
+              type="button"
+              onClick={() => setIsPlaying((playing) => !playing)}
+              aria-label={isPlaying ? "Pause workflow playback" : "Resume workflow playback"}
+            >
+              {isPlaying ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
+              {isPlaying ? "Pause" : "Resume"}
+            </button>
+          )}
+        </div>
+
+        <div
+          className="analytics-stage-details"
+          id="analytics-stage-details"
+          role="tabpanel"
+          aria-labelledby={`analytics-stage-tab-${activeStage}`}
+        >
+          <div>
+            <span className="analytics-stage-details__eyebrow">STAGE {selectedStage.number}</span>
+            <h3>{selectedStage.name}</h3>
+            <p>{selectedStage.insight}</p>
+          </div>
+          <ul aria-label={`${selectedStage.name} tools`}>
+            {selectedStage.tools.map((tool) => <li key={tool}>{tool}</li>)}
+          </ul>
         </div>
 
         {/* Project Evidence & KPIs Banner */}

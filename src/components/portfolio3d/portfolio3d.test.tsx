@@ -1,6 +1,6 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, fireEvent, act, cleanup } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { StoveSafetySection } from "./StoveSafetySection";
 import { AnalyticsWorkflowSection, pipelineStagesData } from "./AnalyticsWorkflowSection";
 import { TechnicalSkillsSection, skillCategoriesData } from "./TechnicalSkillsSection";
@@ -21,6 +21,8 @@ vi.mock("@react-three/drei", () => ({
 }));
 
 describe("Portfolio 3D Sections", () => {
+  afterEach(() => cleanup());
+
   beforeEach(() => {
     vi.stubGlobal("matchMedia", (query: string) => ({
       matches: false,
@@ -71,6 +73,25 @@ describe("Portfolio 3D Sections", () => {
       const stagePill = screen.getByRole("tab", { name: /Analysis/i });
       fireEvent.click(stagePill);
       expect(stagePill).toHaveAttribute("aria-selected", "true");
+      expect(screen.getByRole("tabpanel")).toHaveTextContent(/Aggregated profit margin analysis/i);
+      expect(screen.getByRole("button", { name: /resume workflow playback/i })).toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole("button", { name: /resume workflow playback/i }));
+      expect(screen.getByRole("button", { name: /pause workflow playback/i })).toBeInTheDocument();
+    });
+
+    it("advances to the next stage after 4.5 seconds", async () => {
+      vi.useFakeTimers();
+      try {
+        render(<AnalyticsWorkflowSection />);
+        await act(async () => {
+          await vi.advanceTimersByTimeAsync(4500);
+        });
+
+        expect(screen.getByRole("tab", { name: /Preparation/i })).toHaveAttribute("aria-selected", "true");
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 
@@ -78,13 +99,18 @@ describe("Portfolio 3D Sections", () => {
     it("renders 5 technical categories and selected-skill details", () => {
       render(<TechnicalSkillsSection />);
 
-      expect(screen.getByText(/Technical skills\./i)).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Technical skills" })).toBeInTheDocument();
 
       skillCategoriesData.forEach((cat) => {
         expect(screen.getAllByText(new RegExp(cat.title, "i"))[0]).toBeInTheDocument();
       });
 
-      expect(screen.getByRole("region", { name: /selected skill discipline details/i })).toBeInTheDocument();
+      const skillCards = [...document.querySelectorAll(".skills-category-card")];
+      expect(skillCards).toHaveLength(5);
+      expect(skillCards.map((card) => card.querySelector(".skills-category-num")?.textContent)).toEqual([
+        "01", "02", "03", "04", "05",
+      ]);
+      expect(screen.queryByRole("region", { name: /selected skill discipline details/i })).not.toBeInTheDocument();
     });
   });
 
