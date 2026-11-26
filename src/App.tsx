@@ -78,7 +78,7 @@ function App() {
               Analyzing Spotify track data using SQL to explore popularity,
               genres, track characteristics and trends.
             </p>
-            <a href="#" className="project-link">
+           <a href="https://github.com/Indhuraj-DataEngineering/Portfolio---Indhuraj---Data" className="project-link" target="_blank" rel="noopener noreferrer">
               View project ↗
             </a>
           </article>
