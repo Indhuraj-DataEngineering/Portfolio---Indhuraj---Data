@@ -150,7 +150,7 @@ function App() {
 
         <div className="contact-links">
          <a href="mailto:indhurajlakshmanan@gmail.com">Email ↗</a>
-          <a href="https://github.com/">GitHub ↗</a>
+          <a href="https://github.com/Indhuraj-DataEngineering" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           <a href="https://linkedin.com/">LinkedIn ↗</a>
         </div>
       </section>
