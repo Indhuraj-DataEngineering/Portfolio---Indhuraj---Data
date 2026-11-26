@@ -72,26 +72,6 @@ function App() {
           <article className="project-card">
             <div className="project-top">
               <span>01</span>
-              <span>SQL · MYSQL</span>
-            </div>
-            <h3>Spotify Data Analytics</h3>
-            <p>
-              Analyzing Spotify track data using SQL to explore popularity,
-              genres, track characteristics and trends.
-            </p>
-            <a
-              href="#"
-              className="project-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View project ↗
-            </a>
-          </article>
-
-          <article className="project-card">
-            <div className="project-top">
-              <span>02</span>
               <span>PYTHON</span>
             </div>
             <h3>Tamil Movie Recommender</h3>
@@ -111,7 +91,7 @@ function App() {
 
           <article className="project-card">
             <div className="project-top">
-              <span>03</span>
+              <span>02</span>
               <span>POWER BI</span>
             </div>
             <h3>Power BI Capstone</h3>
@@ -131,7 +111,7 @@ function App() {
 
           <article className="project-card">
             <div className="project-top">
-              <span>04</span>
+              <span>03</span>
               <span>EXCEL</span>
             </div>
             <h3>Excel Data Analysis</h3>
