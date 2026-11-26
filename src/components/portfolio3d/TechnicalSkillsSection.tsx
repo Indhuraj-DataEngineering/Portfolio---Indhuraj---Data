@@ -7,6 +7,7 @@ import {
   Workflow,
   type LucideIcon,
 } from "lucide-react";
+import { soundEngine } from "../../utils/soundEngine";
 
 export interface SkillCategoryDef {
   index: string;
@@ -26,7 +27,8 @@ export const skillCategoriesData: SkillCategoryDef[] = [
     index: "01",
     title: "Programming & Analysis",
     icon: Code2,
-    description: "Core algorithmic data processing, tabular data manipulation, and exploratory data analysis.",
+    description:
+      "Data cleaning, tabular transformations, vectorized computation, and structured exploratory data analysis.",
     tools: ["Python", "Pandas", "NumPy", "Data cleaning", "Exploratory data analysis"],
     telemetry: {
       runtime: "python_v3.12",
@@ -38,8 +40,16 @@ export const skillCategoriesData: SkillCategoryDef[] = [
     index: "02",
     title: "Databases",
     icon: Database,
-    description: "Relational data modeling, ACID transaction integrity, and performant SQL queries.",
-    tools: ["SQL", "MySQL", "MySQL Workbench"],
+    description:
+      "Relational querying, schema modeling, and multi-table metric extraction using MySQL.",
+    tools: [
+      "SQL",
+      "MySQL",
+      "MySQL Workbench",
+      "Joins & Subqueries",
+      "CTEs & Window Functions",
+      "Stored Procedures",
+    ],
     telemetry: {
       runtime: "mysql_relational",
       usage: "indexed_queries",
@@ -50,7 +60,8 @@ export const skillCategoriesData: SkillCategoryDef[] = [
     index: "03",
     title: "Visualization & Reporting",
     icon: BarChart3,
-    description: "Executive business dashboards, interactive drill-downs, and statistical plotting.",
+    description:
+      "Executive BI dashboards, DAX time-intelligence measures, PivotTables, and statistical charting.",
     tools: ["Power BI", "DAX", "Microsoft Excel", "PivotTables", "Matplotlib", "Seaborn"],
     telemetry: {
       runtime: "power_bi_dax",
@@ -62,8 +73,9 @@ export const skillCategoriesData: SkillCategoryDef[] = [
     index: "04",
     title: "Statistics",
     icon: Sparkles,
-    description: "Mathematical hypothesis validation, distribution estimation, and significance testing.",
-    tools: ["Descriptive statistics", "Hypothesis testing"],
+    description:
+      "Summary distributions, hypothesis validation, and multi-variable correlation testing.",
+    tools: ["Descriptive statistics", "Hypothesis testing", "Correlation analysis"],
     telemetry: {
       runtime: "inferential_stats",
       usage: "variance_testing",
@@ -74,8 +86,9 @@ export const skillCategoriesData: SkillCategoryDef[] = [
     index: "05",
     title: "Project Tools",
     icon: Workflow,
-    description: "Iterative notebook workflows, machine learning model building, and rapid web application deployment.",
-    tools: ["Jupyter Notebook", "Scikit-learn", "Streamlit"],
+    description:
+      "Iterative notebook experimentation, Scikit-learn modeling, and interactive Streamlit deployment.",
+    tools: ["Jupyter Notebook", "Scikit-learn", "Streamlit", "GitHub", "VS Code"],
     telemetry: {
       runtime: "jupyter_sklearn",
       usage: "app_deployment",
@@ -87,24 +100,24 @@ export const skillCategoriesData: SkillCategoryDef[] = [
 export function TechnicalSkillsSection() {
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
+  const handleSelect = (idx: number) => {
+    soundEngine.playSoftClick();
+    setActiveIdx(idx);
+  };
+
   return (
     <section
-      className="p3d-section p3d-section--tinted"
+      className="p3d-section"
       id="skills"
       aria-label="Technical skills and tools ecosystem"
     >
-      <div className="p3d-ambient-glow p3d-ambient-glow--orange" style={{ top: "30%", left: "50%", transform: "translateX(-50%)", width: "620px", height: "620px" }} />
-
       <div className="p3d-container">
-        {/* Section Heading */}
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <span className="p3d-badge">
-            <span className="pulse-dot" />
-            TOOLS & TECHNOLOGIES · CENTRAL HUB
-          </span>
-          <h2 className="p3d-heading p3d-heading--centered">Technical skills</h2>
-          <p className="p3d-description p3d-description--centered">
-            Skills and tools listed in my resume, grouped by engineering discipline in a clear, professional layout.
+        <div className="p3d-section-header">
+          <p className="p3d-eyebrow">03 / TOOLS &amp; TECHNOLOGIES</p>
+          <h2 className="p3d-heading">Technical skills</h2>
+          <p className="p3d-description">
+            Verified tools and analytical competencies grouped by their role across data preparation,
+            relational querying, business intelligence, and applied modeling.
           </p>
         </div>
 
@@ -117,21 +130,22 @@ export function TechnicalSkillsSection() {
               <article
                 key={cat.title}
                 className={`skills-category-card ${isActive ? "skills-category-card--active" : ""}`}
-                onClick={() => setActiveIdx(actualIdx)}
+                onClick={() => handleSelect(actualIdx)}
                 tabIndex={0}
                 role="button"
                 aria-pressed={isActive}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveIdx(actualIdx)}
+                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleSelect(actualIdx)}
               >
                 <div className="skills-category-header">
                   <div className="skills-category-icon">
-                    <Icon size={20} />
+                    <Icon size={20} strokeWidth={1.75} aria-hidden="true" />
                   </div>
                   <div className="skills-category-meta">
                     <span className="skills-category-num">{cat.index}</span>
                     <strong className="skills-category-title">{cat.title}</strong>
                   </div>
                 </div>
+                <p className="skills-category-desc">{cat.description}</p>
                 <div className="skills-tools-pills">
                   {cat.tools.map((tool) => (
                     <span key={tool} className="skills-tool-chip">
@@ -143,7 +157,6 @@ export function TechnicalSkillsSection() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

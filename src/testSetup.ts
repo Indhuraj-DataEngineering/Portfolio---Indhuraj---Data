@@ -15,3 +15,7 @@ if (!window.matchMedia) {
     }),
   });
 }
+
+if (typeof window !== "undefined") {
+  window.scrollTo = () => {};
+}

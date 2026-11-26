@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { soundEngine } from "../../utils/soundEngine";
 
 export interface PipelineStageDef {
   number: string;
@@ -72,7 +73,7 @@ export function AnalyticsWorkflowSection() {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isInView, setIsInView] = useState<boolean>(false);
   const [isPageVisible, setIsPageVisible] = useState<boolean>(
-    () => typeof document !== "undefined" && document.visibilityState === "visible",
+    () => typeof document !== "undefined" && document.visibilityState === "visible"
   );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -92,9 +93,12 @@ export function AnalyticsWorkflowSection() {
       return;
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting);
-    }, { threshold: 0.01 });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.01 }
+    );
     observer.observe(section);
 
     return () => observer.disconnect();
@@ -113,6 +117,7 @@ export function AnalyticsWorkflowSection() {
   }, [activeStage, isInView, isPageVisible, isPlaying, prefersReducedMotion]);
 
   const handleSelectStage = (stageNum: number) => {
+    soundEngine.playSoftClick();
     setActiveStage(stageNum);
     setIsPlaying(false);
   };
@@ -126,21 +131,15 @@ export function AnalyticsWorkflowSection() {
       id="pipeline"
       aria-label="Sales analytics workflow: From sales data to clear insights"
     >
-      <div className="p3d-ambient-glow p3d-ambient-glow--orange" style={{ top: "25%", right: "12%", width: "480px", height: "480px" }} />
-      <div className="p3d-ambient-glow p3d-ambient-glow--warm" style={{ bottom: "5%", left: "8%", width: "520px", height: "520px" }} />
-
       <div className="p3d-container">
-        {/* Section Heading */}
-        <div style={{ textAlign: "center", marginBottom: "40px" }}>
-          <span className="p3d-badge">
-            <span className="pulse-dot" />
-            ANALYSIS WORKFLOW · END-TO-END PROCESS
-          </span>
-          <h2 className="p3d-heading p3d-heading--centered">
+        <div className="p3d-section-header">
+          <p className="p3d-eyebrow">04 / ANALYSIS WORKFLOW</p>
+          <h2 className="p3d-heading">
             From sales data<br />to clear insights
           </h2>
-          <p className="p3d-description p3d-description--centered">
-            A workflow based on the Excel sales analysis and Power BI capstone in my portfolio. Transforming raw multi-dimensional commerce records into actionable executive intelligence.
+          <p className="p3d-description">
+            An end-to-end analytical workflow drawn from my Excel sales analysis and Power BI
+            capstone — converting raw multi-dimensional commerce records into executive intelligence.
           </p>
         </div>
 
@@ -165,7 +164,7 @@ export function AnalyticsWorkflowSection() {
                 <div className="analytics-stage-top">
                   <span className="analytics-stage-num">{stage.number}</span>
                   <div className="analytics-stage-icon">
-                    <Icon size={18} />
+                    <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
                   </div>
                 </div>
                 <strong className="analytics-stage-title">{stage.name}</strong>
@@ -183,15 +182,18 @@ export function AnalyticsWorkflowSection() {
                 ? "Playback pauses while this page is in the background."
                 : !isInView
                   ? "Playback pauses while this section is offscreen."
-              : isPlaying
-                ? "Stages advance every 4.5 seconds while this section is visible."
-                : "Workflow paused. Select a stage or resume playback."}
+                  : isPlaying
+                    ? "Stages advance every 4.5 seconds while this section is visible."
+                    : "Workflow paused. Select a stage or resume playback."}
           </p>
           {!prefersReducedMotion && (
             <button
               className="analytics-workflow-toggle"
               type="button"
-              onClick={() => setIsPlaying((playing) => !playing)}
+              onClick={() => {
+                soundEngine.playSoftClick();
+                setIsPlaying((playing) => !playing);
+              }}
               aria-label={isPlaying ? "Pause workflow playback" : "Resume workflow playback"}
             >
               {isPlaying ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
@@ -212,7 +214,9 @@ export function AnalyticsWorkflowSection() {
             <p>{selectedStage.insight}</p>
           </div>
           <ul aria-label={`${selectedStage.name} tools`}>
-            {selectedStage.tools.map((tool) => <li key={tool}>{tool}</li>)}
+            {selectedStage.tools.map((tool) => (
+              <li key={tool}>{tool}</li>
+            ))}
           </ul>
         </div>
 
@@ -220,27 +224,27 @@ export function AnalyticsWorkflowSection() {
         <div className="analytics-kpis-grid" role="region" aria-label="Project evidence">
           <article className="analytics-kpi-card">
             <div className="analytics-kpi-icon">
-              <FileSpreadsheet size={22} />
+              <FileSpreadsheet size={22} strokeWidth={1.75} aria-hidden="true" />
             </div>
             <div className="analytics-kpi-data">
               <span className="analytics-kpi-number">9,994</span>
-              <span className="analytics-kpi-label">Sales records analyzed & normalized</span>
+              <span className="analytics-kpi-label">Sales records analyzed &amp; normalized</span>
             </div>
           </article>
 
           <article className="analytics-kpi-card">
             <div className="analytics-kpi-icon">
-              <Workflow size={22} />
+              <Workflow size={22} strokeWidth={1.75} aria-hidden="true" />
             </div>
             <div className="analytics-kpi-data">
               <span className="analytics-kpi-number">Microsoft Excel</span>
-              <span className="analytics-kpi-label">Interactive dashboard & PivotTable filters</span>
+              <span className="analytics-kpi-label">Interactive dashboard &amp; PivotTable filters</span>
             </div>
           </article>
 
           <article className="analytics-kpi-card">
             <div className="analytics-kpi-icon">
-              <TrendingUp size={22} />
+              <TrendingUp size={22} strokeWidth={1.75} aria-hidden="true" />
             </div>
             <div className="analytics-kpi-data">
               <span className="analytics-kpi-number">Power BI + DAX</span>
