@@ -1,3 +1,4 @@
+
 import "./App.css";
 
 function App() {
@@ -78,7 +79,12 @@ function App() {
               Analyzing Spotify track data using SQL to explore popularity,
               genres, track characteristics and trends.
             </p>
-           <a href="https://github.com/Indhuraj-DataEngineering/Portfolio---Indhuraj---Data" className="project-link" target="_blank" rel="noopener noreferrer">
+            <a
+              href="#"
+              className="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View project ↗
             </a>
           </article>
@@ -93,7 +99,12 @@ function App() {
               A Python-based movie recommendation project designed to
               recommend movies based on user preferences.
             </p>
-            <a href="#" className="project-link">
+            <a
+              href="https://github.com/Indhuraj-DataEngineering/tamil-movie-recommender"
+              className="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View project ↗
             </a>
           </article>
@@ -108,7 +119,12 @@ function App() {
               An interactive dashboard project focused on visualizing
               data, analyzing performance and presenting insights.
             </p>
-            <a href="#" className="project-link">
+            <a
+              href="https://github.com/Indhuraj-DataEngineering/power-bi-sales-analytics-capstone"
+              className="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View project ↗
             </a>
           </article>
@@ -123,7 +139,12 @@ function App() {
               Exploring, organizing and analyzing data using Excel
               to transform raw data into useful information.
             </p>
-            <a href="#" className="project-link">
+            <a
+              href="https://github.com/Indhuraj-DataEngineering/excel-sales-performance-dashboard"
+              className="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View project ↗
             </a>
           </article>
@@ -149,9 +170,23 @@ function App() {
         <p>Open to opportunities in Data Analytics.</p>
 
         <div className="contact-links">
-         <a href="mailto:indhurajlakshmanan@gmail.com">Email ↗</a>
-          <a href="https://github.com/Indhuraj-DataEngineering" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          <a href="https://www.linkedin.com/in/indhuraj-l-8019922a2/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="mailto:indhurajlakshmanan@gmail.com">
+            Email ↗
+          </a>
+          <a
+            href="https://github.com/Indhuraj-DataEngineering"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub ↗
+          </a>
+          <a
+            href="https://www.linkedin.com/in/indhuraj-l-8019922a2/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn ↗
+          </a>
         </div>
       </section>
 
