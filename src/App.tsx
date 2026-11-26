@@ -149,7 +149,7 @@ function App() {
         <p>Open to opportunities in Data Analytics.</p>
 
         <div className="contact-links">
-          <a href="mailto:your-email@example.com">Email ↗</a>
+         <a href="mailto:indhurajlakshmanan@gmail.com">Email ↗</a>
           <a href="https://github.com/">GitHub ↗</a>
           <a href="https://linkedin.com/">LinkedIn ↗</a>
         </div>
