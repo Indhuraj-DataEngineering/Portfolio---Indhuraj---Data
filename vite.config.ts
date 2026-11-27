@@ -4,107 +4,154 @@ import { defineConfig } from "vitest/config";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 
-const VIRTUAL_REACT_TARGETS: Record<
-  string,
-  { contents: string; external: string[] }
-> = {
+const VENDOR_IMPORT_PLACEHOLDER = "/__vreact_vendor__";
+const SHIM_PREFIX = "\0react-shim:";
+
+const REACT_SHIM_CONFIGS: Record<string, { exportKey: string; namedExports: string[] }> = {
   react: {
-    contents: `
-      import * as ReactNS from "react";
-      export default ReactNS;
-      export const {
-        Children, Component, Fragment, Profiler, PureComponent, StrictMode, Suspense,
-        act, cache, captureOwnerStack, cloneElement, createContext, createElement, createRef,
-        forwardRef, isValidElement, lazy, memo, startTransition, use, useActionState,
-        useCallback, useContext, useDebugValue, useDeferredValue, useEffect, useId,
-        useImperativeHandle, useInsertionEffect, useLayoutEffect, useMemo, useOptimistic,
-        useReducer, useRef, useState, useSyncExternalStore, useTransition, version
-      } = ReactNS;
-    `,
-    external: [],
+    exportKey: "__react",
+    namedExports: [
+      "Children", "Component", "Fragment", "Profiler", "PureComponent", "StrictMode", "Suspense",
+      "__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE", "__COMPILER_RUNTIME",
+      "act", "cache", "captureOwnerStack", "cloneElement", "createContext", "createElement",
+      "createRef", "forwardRef", "isValidElement", "lazy", "memo", "startTransition",
+      "unstable_useCacheRefresh", "use", "useActionState", "useCallback", "useContext",
+      "useDebugValue", "useDeferredValue", "useEffect", "useId", "useImperativeHandle",
+      "useInsertionEffect", "useLayoutEffect", "useMemo", "useOptimistic", "useReducer",
+      "useRef", "useState", "useSyncExternalStore", "useTransition", "version",
+    ],
   },
   "react/jsx-runtime": {
-    contents: `
-      import * as JsxRT from "react/jsx-runtime";
-      export default JsxRT;
-      export const { Fragment, jsx, jsxs } = JsxRT;
-    `,
-    external: ["react"],
+    exportKey: "__jsxRuntime",
+    namedExports: ["Fragment", "jsx", "jsxs"],
   },
   "react/jsx-dev-runtime": {
-    contents: `
-      import * as JsxDevRT from "react/jsx-dev-runtime";
-      export default JsxDevRT;
-      export const { Fragment, jsxDEV } = JsxDevRT;
-    `,
-    external: ["react"],
+    exportKey: "__jsxDevRuntime",
+    namedExports: ["Fragment", "jsxDEV"],
   },
   "react-dom": {
-    contents: `
-      import * as ReactDomNS from "react-dom";
-      export default ReactDomNS;
-      export const {
-        createPortal, flushSync, preconnect, prefetchDNS, preinit, preinitModule,
-        preload, preloadModule, requestFormReset, version
-      } = ReactDomNS;
-    `,
-    external: ["react"],
+    exportKey: "__reactDom",
+    namedExports: [
+      "__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE",
+      "createPortal", "flushSync", "preconnect", "prefetchDNS", "preinit", "preinitModule",
+      "preload", "preloadModule", "requestFormReset", "unstable_batchedUpdates",
+      "useFormState", "useFormStatus", "version",
+    ],
   },
   "react-dom/client": {
-    contents: `
-      import * as ReactDomClientNS from "react-dom/client";
-      export default ReactDomClientNS;
-      export const { createRoot, hydrateRoot, version } = ReactDomClientNS;
-    `,
-    external: ["react", "react-dom"],
+    exportKey: "__reactDomClient",
+    namedExports: ["createRoot", "hydrateRoot", "version"],
   },
 };
 
+function shortHash(text: string): string {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
 /**
- * Pre-bundles CommonJS React 19 entrypoints via esbuild during production builds
- * so Rollup avoids slow single-file CommonJS AST conversion on Windows/OneDrive.
+ * Emits React 19 + ReactDOM as a single pre-bundled ESM vendor chunk via esbuild
+ * so Rollup avoids parsing 15k+ lines of CommonJS React internals on Windows/OneDrive
+ * while keeping one shared React runtime instance across all imports.
  */
-function prebundleReactForBuild(): Plugin {
+function prebundleReactVendor(): Plugin {
   let rootDir = ".";
-  const cache = new Map<string, string>();
+  let baseUrl = "/";
+  let vendorPromise: Promise<{ fileName: string; code: string }> | null = null;
 
-  return {
-    name: "prebundle-react-for-build",
-    apply: "build",
-    enforce: "pre",
-    configResolved(config) {
-      rootDir = config.root;
-    },
-    resolveId(source) {
-      if (source in VIRTUAL_REACT_TARGETS) {
-        return `\0virtual-react:${source}`;
-      }
-      return null;
-    },
-    async load(id) {
-      if (!id.startsWith("\0virtual-react:")) return null;
-      const pkg = id.slice("\0virtual-react:".length);
-      const cached = cache.get(pkg);
-      if (cached) return cached;
+  const ensureVendorBundle = () => {
+    if (vendorPromise) return vendorPromise;
 
-      const target = VIRTUAL_REACT_TARGETS[pkg];
+    vendorPromise = (async () => {
+      const entryLines = Object.entries(REACT_SHIM_CONFIGS).map(
+        ([pkg, cfg]) => `export const ${cfg.exportKey} = require(${JSON.stringify(pkg)});`,
+      );
       const result = await esbuildBundle({
         stdin: {
-          contents: target.contents,
+          contents: entryLines.join("\n"),
           resolveDir: rootDir,
           loader: "js",
         },
         bundle: true,
+        minify: true,
         format: "esm",
         write: false,
         platform: "browser",
-        external: target.external,
         define: { "process.env.NODE_ENV": '"production"' },
       });
 
       const code = result.outputFiles[0].text;
-      cache.set(pkg, code);
-      return code;
+      const hash = shortHash(code);
+      return {
+        fileName: `assets/react-vendor-${hash}.js`,
+        code,
+      };
+    })();
+
+    return vendorPromise;
+  };
+
+  return {
+    name: "prebundle-react-vendor",
+    apply: "build",
+    enforce: "pre",
+    configResolved(config) {
+      rootDir = config.root;
+      baseUrl = config.base.endsWith("/") ? config.base : `${config.base}/`;
+    },
+    buildStart() {
+      vendorPromise = null;
+    },
+    resolveId(source) {
+      if (source === VENDOR_IMPORT_PLACEHOLDER) {
+        return { id: VENDOR_IMPORT_PLACEHOLDER, external: true };
+      }
+      if (source in REACT_SHIM_CONFIGS) {
+        return `${SHIM_PREFIX}${source}`;
+      }
+      return null;
+    },
+    load(id) {
+      if (!id.startsWith(SHIM_PREFIX)) return null;
+      const pkg = id.slice(SHIM_PREFIX.length);
+      const cfg = REACT_SHIM_CONFIGS[pkg];
+      if (!cfg) return null;
+
+      return [
+        `import { ${cfg.exportKey} as __m } from "${VENDOR_IMPORT_PLACEHOLDER}";`,
+        `export default __m;`,
+        `export const { ${cfg.namedExports.join(", ")} } = __m;`,
+      ].join("\n");
+    },
+    async generateBundle(_options, bundle) {
+      const vendor = await ensureVendorBundle();
+      const vendorBaseName = vendor.fileName.split("/").pop()!;
+
+      this.emitFile({
+        type: "asset",
+        fileName: vendor.fileName,
+        source: vendor.code,
+      });
+
+      for (const item of Object.values(bundle)) {
+        if (item.type === "chunk" && item.code.includes(VENDOR_IMPORT_PLACEHOLDER)) {
+          const importTarget = item.fileName.startsWith("assets/")
+            ? `./${vendorBaseName}`
+            : `${baseUrl}${vendor.fileName}`;
+          item.code = item.code.split(VENDOR_IMPORT_PLACEHOLDER).join(importTarget);
+        } else if (
+          item.type === "asset" &&
+          item.fileName === "index.html" &&
+          typeof item.source === "string"
+        ) {
+          const preloadTag = `    <link rel="modulepreload" crossorigin href="${baseUrl}${vendor.fileName}">\n`;
+          item.source = item.source.replace("  </head>", `${preloadTag}  </head>`);
+        }
+      }
     },
   };
 }
@@ -159,7 +206,7 @@ function optimizeLucideImports(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [prebundleReactForBuild(), react(), optimizeLucideImports(), tailwindcss()],
+  plugins: [prebundleReactVendor(), react(), optimizeLucideImports(), tailwindcss()],
   test: {
     environment: "jsdom",
     setupFiles: "./src/testSetup.ts",
