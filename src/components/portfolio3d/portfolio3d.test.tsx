@@ -96,7 +96,7 @@ describe("Portfolio 3D Sections", () => {
   });
 
   describe("TechnicalSkillsSection", () => {
-    it("renders 5 technical categories and selected-skill details", () => {
+    it("renders 6 technical categories including Machine learning and Deep learning", () => {
       render(<TechnicalSkillsSection />);
 
       expect(screen.getByRole("heading", { name: "Technical skills" })).toBeInTheDocument();
@@ -105,10 +105,13 @@ describe("Portfolio 3D Sections", () => {
         expect(screen.getAllByText(new RegExp(cat.title, "i"))[0]).toBeInTheDocument();
       });
 
+      expect(screen.getByText("Machine learning")).toBeInTheDocument();
+      expect(screen.getByText("Deep learning")).toBeInTheDocument();
+
       const skillCards = [...document.querySelectorAll(".skills-category-card")];
-      expect(skillCards).toHaveLength(5);
+      expect(skillCards).toHaveLength(6);
       expect(skillCards.map((card) => card.querySelector(".skills-category-num")?.textContent)).toEqual([
-        "01", "02", "03", "04", "05",
+        "01", "02", "03", "04", "05", "06",
       ]);
       expect(screen.queryByRole("region", { name: /selected skill discipline details/i })).not.toBeInTheDocument();
     });

@@ -115,9 +115,6 @@ export function HeroSection({ onSelectSection }: HeroSectionProps) {
             >
               <Mail size={17} strokeWidth={1.75} />
             </a>
-            <span className="ml-2 font-mono-tech text-[11px] text-[#87837c]">
-              Salem · Chennai, India
-            </span>
           </div>
         </div>
 

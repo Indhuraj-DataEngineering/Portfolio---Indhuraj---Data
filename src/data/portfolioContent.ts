@@ -109,8 +109,8 @@ export const HERO_CAPABILITIES: CapabilityChip[] = [
   { label: "SQL & MySQL", detail: "Joins, CTEs & windows", iconKey: "sql" },
   { label: "Power BI & DAX", detail: "Time-intelligence KPIs", iconKey: "powerbi" },
   { label: "Microsoft Excel", detail: "PivotTables & dashboards", iconKey: "excel" },
-  { label: "Statistics", detail: "Hypothesis & variance", iconKey: "stats" },
-  { label: "Scikit-learn", detail: "Applied ML workflows", iconKey: "ml" },
+  { label: "Machine learning", detail: "Scikit-learn & modeling", iconKey: "ml" },
+  { label: "Deep learning", detail: "Neural networks & AI", iconKey: "stats" },
 ];
 
 export const ABOUT_PILLARS: AboutPillar[] = [

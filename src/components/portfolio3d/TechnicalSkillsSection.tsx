@@ -3,6 +3,7 @@ import {
   Code2,
   Database,
   BarChart3,
+  BrainCircuit,
   Sparkles,
   Workflow,
   type LucideIcon,
@@ -84,13 +85,32 @@ export const skillCategoriesData: SkillCategoryDef[] = [
   },
   {
     index: "05",
+    title: "Machine Learning & Deep Learning",
+    icon: BrainCircuit,
+    description:
+      "Supervised predictive modeling, feature engineering, neural architectures, and model evaluation.",
+    tools: [
+      "Machine learning",
+      "Deep learning",
+      "Scikit-learn",
+      "Neural networks",
+      "Model evaluation",
+    ],
+    telemetry: {
+      runtime: "ml_dl_models",
+      usage: "predictive_intelligence",
+      confidence: 0.96,
+    },
+  },
+  {
+    index: "06",
     title: "Project Tools",
     icon: Workflow,
     description:
-      "Iterative notebook experimentation, Scikit-learn modeling, and interactive Streamlit deployment.",
-    tools: ["Jupyter Notebook", "Scikit-learn", "Streamlit", "GitHub", "VS Code"],
+      "Iterative notebook experimentation, version control, and interactive Streamlit deployment.",
+    tools: ["Jupyter Notebook", "Streamlit", "GitHub", "VS Code"],
     telemetry: {
-      runtime: "jupyter_sklearn",
+      runtime: "jupyter_streamlit",
       usage: "app_deployment",
       confidence: 0.97,
     },

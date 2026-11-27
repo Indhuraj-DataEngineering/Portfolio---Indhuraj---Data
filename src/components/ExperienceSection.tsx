@@ -317,8 +317,8 @@ export function ExperienceSection() {
                   </p>
                   <p className="text-[#f4f1ea] leading-relaxed">
                     Python (Pandas, NumPy, Matplotlib, Seaborn) · SQL &amp; MySQL (Joins, CTEs, Window
-                    Functions) · Power BI &amp; DAX · Microsoft Excel (PivotTables) · Scikit-learn ·
-                    Streamlit
+                    Functions) · Power BI &amp; DAX · Microsoft Excel (PivotTables) · Machine
+                    learning · Deep learning · Scikit-learn · Streamlit
                   </p>
                 </div>
 

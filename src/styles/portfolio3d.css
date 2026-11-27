@@ -110,11 +110,6 @@
   text-align: left;
 }
 
-.skills-category-card:nth-child(1),
-.skills-category-card:nth-child(2) {
-  grid-column: span 3;
-}
-
 .skills-category-card:hover {
   transform: translateY(-3px);
   border-color: var(--p3d-border-hover);
@@ -697,13 +692,8 @@
   .skills-interactive-layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .skills-category-card,
-  .skills-category-card:nth-child(1),
-  .skills-category-card:nth-child(2) {
+  .skills-category-card {
     grid-column: span 1;
-  }
-  .skills-category-card:last-child {
-    grid-column: 1 / -1;
   }
   .stove-section-grid {
     grid-template-columns: 1fr;
@@ -734,9 +724,6 @@
 @media (max-width: 680px) {
   .skills-interactive-layout {
     grid-template-columns: 1fr;
-  }
-  .skills-category-card:last-child {
-    grid-column: auto;
   }
   .stove-sensors-grid {
     grid-template-columns: 1fr;
