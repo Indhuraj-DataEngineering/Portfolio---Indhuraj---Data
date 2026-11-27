@@ -43,7 +43,7 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="relative scroll-mt-32 lg:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative scroll-mt-32 xl:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
       aria-labelledby="experience-heading"
     >
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-14 xl:px-20 space-y-10">
@@ -51,7 +51,7 @@ export function ExperienceSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <p className="font-mono-tech text-[11.5px] uppercase tracking-[0.16em] text-[#dfd0a6] mb-2">
-              07 / EXPERIENCE &amp; CREDENTIALS
+              07 / EXPERIENCE &amp; EDUCATION
             </p>
             <h2
               id="experience-heading"
@@ -318,7 +318,8 @@ export function ExperienceSection() {
                   <p className="text-[#f4f1ea] leading-relaxed">
                     Python (Pandas, NumPy, Matplotlib, Seaborn) · SQL &amp; MySQL (Joins, CTEs, Window
                     Functions) · Power BI &amp; DAX · Microsoft Excel (PivotTables) · Machine
-                    learning · Deep learning · Scikit-learn · Streamlit
+                    learning · Deep learning · Scikit-learn · Generative AI · Agentic AI ·
+                    Streamlit
                   </p>
                 </div>
 
@@ -379,7 +380,7 @@ export function ExperienceSection() {
                     openDocument(
                       {
                         title: "Indhuraj L — Official Resume",
-                        subtitle: "Data Analyst · Python, SQL, Power BI, Excel & Applied ML",
+                        subtitle: SITE_PROFILE.subRole,
                         url: SITE_PROFILE.resumeUrl,
                         downloadName: "Indhuraj-L-Resume.pdf",
                       },

@@ -90,7 +90,7 @@ export function StoveSafetySection() {
         <div className="stove-section-grid">
           {/* LEFT: Project Narrative & Feature Cards */}
           <div className="stove-info-column">
-            <p className="p3d-eyebrow">06 / ENGINEERING &amp; RESEARCH PROTOTYPE</p>
+            <p className="p3d-eyebrow">06 / RESEARCH &amp; ENGINEERING</p>
             <h2 className="p3d-heading">
               Smart multi-sensor<br />stove safety system
             </h2>

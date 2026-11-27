@@ -79,7 +79,7 @@ function App() {
         return;
       }
 
-      const headerOffset = window.innerWidth >= 1024 ? 120 : 152;
+      const headerOffset = window.innerWidth >= 1280 ? 120 : 156;
       let current: PortfolioTabId = "home";
 
       for (const item of PORTFOLIO_TABS) {

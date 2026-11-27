@@ -37,7 +37,7 @@ export function HeroSection({ onSelectSection }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="relative scroll-mt-32 lg:scroll-mt-24 lg:min-h-[calc(100dvh-74px)] flex flex-col justify-between py-8 sm:py-12 lg:py-14 overflow-hidden"
+      className="relative scroll-mt-32 xl:scroll-mt-24 xl:min-h-[calc(100dvh-74px)] flex flex-col justify-between py-8 sm:py-12 lg:py-14 overflow-hidden"
       aria-labelledby="hero-heading"
     >
       {/* Main Split Grid */}
@@ -59,6 +59,10 @@ export function HeroSection({ onSelectSection }: HeroSectionProps) {
           >
             {SITE_PROFILE.heroHeadline}
           </h1>
+
+          <p className="text-[13px] sm:text-[14px] font-medium tracking-[0.015em] text-[#dfd0a6]">
+            {SITE_PROFILE.subRole}
+          </p>
 
           <p className="text-[15px] sm:text-[16.5px] leading-[1.7] text-[#b4b0a8] max-w-[50ch]">
             {SITE_PROFILE.heroSummary}
@@ -140,7 +144,7 @@ export function HeroSection({ onSelectSection }: HeroSectionProps) {
             <div className="relative w-full h-full rounded-full overflow-hidden border border-[#dfd0a6]/40 bg-[radial-gradient(circle_at_50%_35%,rgba(223,208,166,0.22)_0%,#3a383f_58%,#28272b_100%)] shadow-[0_24px_64px_rgba(0,0,0,0.45)]">
               <img
                 src="/images/indhuraj-hero-cutout.png"
-                alt="Portrait of Indhuraj L, Data Analyst"
+                alt="Portrait of Indhuraj L, Data Analyst | Data Science & AI Enthusiast"
                 width={900}
                 height={1125}
                 loading="eager"

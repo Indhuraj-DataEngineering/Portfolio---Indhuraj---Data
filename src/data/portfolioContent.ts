@@ -68,8 +68,8 @@ export interface CertificationItem {
 export const SITE_PROFILE = {
   name: "INDHURAJ L",
   displayName: "Indhuraj L",
-  role: "Data Analyst",
-  subRole: "BI Reporting & Applied Data Science",
+  role: "Data Analyst | Data Science & AI Enthusiast",
+  subRole: "Python · SQL · Power BI · Excel · Machine Learning · Generative AI · Agentic AI",
   location: "Krishnagiri & Chennai, Tamil Nadu, India",
   email: "indhurajlakshmanan@gmail.com",
   phone: "+91 9345512924",
@@ -95,12 +95,12 @@ export const SITE_PROFILE = {
 
 export const PORTFOLIO_TABS: NavTabItem[] = [
   { id: "home", label: "Home", shortIndex: "01" },
-  { id: "about", label: "About", shortIndex: "02" },
-  { id: "skills", label: "Skills", shortIndex: "03" },
-  { id: "workflow", label: "Workflow", shortIndex: "04" },
+  { id: "about", label: "About Me", shortIndex: "02" },
+  { id: "skills", label: "Technical Skills", shortIndex: "03" },
+  { id: "workflow", label: "Analytical Process", shortIndex: "04" },
   { id: "projects", label: "Projects", shortIndex: "05" },
-  { id: "research", label: "Research", shortIndex: "06" },
-  { id: "experience", label: "Experience", shortIndex: "07" },
+  { id: "research", label: "Research & Engineering", shortIndex: "06" },
+  { id: "experience", label: "Experience & Education", shortIndex: "07" },
   { id: "contact", label: "Contact", shortIndex: "08" },
 ];
 

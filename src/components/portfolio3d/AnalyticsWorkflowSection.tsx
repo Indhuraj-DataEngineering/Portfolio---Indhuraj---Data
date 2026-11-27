@@ -133,7 +133,7 @@ export function AnalyticsWorkflowSection() {
     >
       <div className="p3d-container">
         <div className="p3d-section-header">
-          <p className="p3d-eyebrow">04 / ANALYSIS WORKFLOW</p>
+          <p className="p3d-eyebrow">04 / ANALYTICAL PROCESS</p>
           <h2 className="p3d-heading">
             From sales data<br />to clear insights
           </h2>

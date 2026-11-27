@@ -31,12 +31,12 @@ export function Navbar({
 
   return (
     <header className="sticky top-0 z-[80] bg-[#2a292e]/85 backdrop-blur-xl border-b border-white/[0.1]">
-      <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10 py-3.5 flex items-center justify-between gap-4">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-3.5 flex items-center justify-between gap-4">
         {/* Left Brand Lockup */}
         <button
           type="button"
           onClick={() => onSelectSection("home")}
-          className="flex items-center gap-3 text-left group cursor-pointer rounded-xl pr-2"
+          className="flex items-center gap-3 text-left group cursor-pointer rounded-xl pr-2 shrink-0"
           aria-label="Indhuraj L — Scroll to top"
         >
           <div className="w-9 h-9 rounded-full border border-[#dfd0a6]/40 bg-[#252428] p-1.5 flex items-center justify-center shrink-0 group-hover:border-[#dfd0a6] transition-colors">
@@ -48,18 +48,18 @@ export function Navbar({
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="leading-tight">
-            <span className="block text-[14.5px] font-bold tracking-[0.04em] text-[#f4f1ea]">
+          <div className="leading-tight max-w-[195px] sm:max-w-none">
+            <span className="block text-[14px] sm:text-[14.5px] font-bold tracking-[0.04em] text-[#f4f1ea]">
               {SITE_PROFILE.name}
             </span>
-            <span className="block text-[11px] font-medium text-[#b4b0a8]">
+            <span className="block text-[10.5px] sm:text-[11px] font-medium text-[#b4b0a8] leading-snug">
               {SITE_PROFILE.role}
             </span>
           </div>
         </button>
 
         {/* Center Desktop Underline Navigation */}
-        <nav aria-label="Portfolio sections" className="hidden lg:flex items-center gap-6">
+        <nav aria-label="Portfolio sections" className="hidden xl:flex items-center gap-4 2xl:gap-6">
           {PORTFOLIO_TABS.map((item) => {
             const isActive = activeSection === item.id;
             return (
@@ -69,7 +69,7 @@ export function Navbar({
                 id={`nav-${item.id}`}
                 aria-current={isActive ? "location" : undefined}
                 onClick={() => onSelectSection(item.id)}
-                className={`relative py-2 text-[13px] tracking-[0.04em] transition-colors cursor-pointer ${
+                className={`relative py-2 text-[12.5px] 2xl:text-[13px] tracking-[0.03em] whitespace-nowrap transition-colors cursor-pointer ${
                   isActive
                     ? "font-semibold text-[#dfd0a6]"
                     : "font-medium text-[#b4b0a8] hover:text-[#f4f1ea]"
@@ -88,7 +88,7 @@ export function Navbar({
         </nav>
 
         {/* Right Controls: Sound Toggle + Mobile Menu */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
             onClick={onToggleSound}
@@ -117,16 +117,16 @@ export function Navbar({
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav-drawer"
             aria-label={mobileMenuOpen ? "Close navigation drawer" : "Open navigation drawer"}
-            className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/12 bg-[#252428] text-[#f4f1ea] hover:border-[#dfd0a6]/50 cursor-pointer"
+            className="xl:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/12 bg-[#252428] text-[#f4f1ea] hover:border-[#dfd0a6]/50 cursor-pointer"
           >
             {mobileMenuOpen ? <X size={19} strokeWidth={1.75} /> : <Menu size={19} strokeWidth={1.75} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Scrollable Quick-Jump Bar */}
+      {/* Quick-Jump Strip for < xl */}
       <nav
-        className="lg:hidden border-t border-white/[0.07] bg-[#242327]/92 px-3 py-2 overflow-x-auto no-scrollbar"
+        className="xl:hidden border-t border-white/[0.07] bg-[#242327]/92 px-3 py-2 overflow-x-auto no-scrollbar"
         aria-label="Mobile quick section links"
       >
         <div className="flex items-center gap-2 w-max">
@@ -151,11 +151,11 @@ export function Navbar({
         </div>
       </nav>
 
-      {/* Mobile Full Drawer */}
+      {/* Drawer for < xl */}
       {mobileMenuOpen && (
         <div
           id="mobile-nav-drawer"
-          className="lg:hidden border-t border-white/[0.08] bg-[#1b1b1e] px-4 py-4 space-y-1.5 shadow-[0_24px_48px_rgba(0,0,0,0.65)]"
+          className="xl:hidden border-t border-white/[0.08] bg-[#1b1b1e] px-4 py-4 space-y-1.5 shadow-[0_24px_48px_rgba(0,0,0,0.65)]"
         >
           {PORTFOLIO_TABS.map((item) => {
             const isActive = activeSection === item.id;

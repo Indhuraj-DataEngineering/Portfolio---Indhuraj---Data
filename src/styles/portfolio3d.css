@@ -31,7 +31,7 @@
   isolation: isolate;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .p3d-section {
     scroll-margin-top: 84px;
   }

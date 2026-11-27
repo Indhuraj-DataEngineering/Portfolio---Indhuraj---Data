@@ -43,7 +43,7 @@ export function AboutSection({ onSelectSection }: AboutSectionProps) {
   return (
     <section
       id="about"
-      className="relative scroll-mt-32 lg:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative scroll-mt-32 xl:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
       aria-labelledby="about-heading"
     >
       {/* Vertical rotated museum watermark on outer right margin (desktop) */}

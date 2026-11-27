@@ -147,7 +147,7 @@ export function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative scroll-mt-32 lg:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative scroll-mt-32 xl:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
       aria-labelledby="projects-heading"
     >
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-14 xl:px-20">
