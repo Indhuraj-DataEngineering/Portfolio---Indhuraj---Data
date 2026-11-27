@@ -19,3 +19,7 @@ if (!window.matchMedia) {
 if (typeof window !== "undefined") {
   window.scrollTo = () => {};
 }
+
+if (typeof Element !== "undefined" && !Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => {};
+}

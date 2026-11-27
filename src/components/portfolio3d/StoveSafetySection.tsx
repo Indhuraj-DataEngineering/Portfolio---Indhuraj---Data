@@ -83,7 +83,7 @@ export function StoveSafetySection() {
   return (
     <section
       className="p3d-section"
-      id="engineering-project"
+      id="research"
       aria-label="Smart multi-sensor stove safety system engineering showcase"
     >
       <div className="p3d-container">

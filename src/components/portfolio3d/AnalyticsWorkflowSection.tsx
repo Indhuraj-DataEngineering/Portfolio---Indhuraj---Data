@@ -128,7 +128,7 @@ export function AnalyticsWorkflowSection() {
     <section
       ref={sectionRef}
       className="p3d-section"
-      id="pipeline"
+      id="workflow"
       aria-label="Sales analytics workflow: From sales data to clear insights"
     >
       <div className="p3d-container">

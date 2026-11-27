@@ -24,9 +24,17 @@
 .p3d-section {
   position: relative;
   color: var(--p3d-text-primary);
-  padding: clamp(40px, 5vw, 76px) clamp(16px, 4.5vw, 80px);
+  padding: clamp(52px, 6vw, 88px) clamp(16px, 4.5vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  scroll-margin-top: 120px;
   overflow: hidden;
   isolation: isolate;
+}
+
+@media (min-width: 1024px) {
+  .p3d-section {
+    scroll-margin-top: 84px;
+  }
 }
 
 .p3d-container {

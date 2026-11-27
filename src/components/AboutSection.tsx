@@ -23,10 +23,10 @@ const pillarIcons: Record<AboutPillar["iconKey"], LucideIcon> = {
 };
 
 interface AboutSectionProps {
-  onSelectTab: (tab: PortfolioTabId) => void;
+  onSelectSection: (sectionId: PortfolioTabId) => void;
 }
 
-export function AboutSection({ onSelectTab }: AboutSectionProps) {
+export function AboutSection({ onSelectSection }: AboutSectionProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = async () => {
@@ -42,7 +42,8 @@ export function AboutSection({ onSelectTab }: AboutSectionProps) {
 
   return (
     <section
-      className="relative py-10 sm:py-16 lg:py-20 overflow-hidden"
+      id="about"
+      className="relative scroll-mt-32 lg:scroll-mt-24 border-t border-white/[0.07] py-12 sm:py-16 lg:py-24 overflow-hidden"
       aria-labelledby="about-heading"
     >
       {/* Vertical rotated museum watermark on outer right margin (desktop) */}
@@ -106,7 +107,7 @@ export function AboutSection({ onSelectTab }: AboutSectionProps) {
                 type="button"
                 onClick={() => {
                   soundEngine.playChime();
-                  onSelectTab("contact");
+                  onSelectSection("contact");
                 }}
                 className="tactile-btn inline-flex items-center gap-2 min-h-[46px] px-7 rounded-full bg-[#dfd0a6] text-[#17171a] text-[13.5px] font-semibold hover:bg-[#e8dbb8] cursor-pointer"
               >
@@ -117,7 +118,7 @@ export function AboutSection({ onSelectTab }: AboutSectionProps) {
                 type="button"
                 onClick={() => {
                   soundEngine.playTabSwitch();
-                  onSelectTab("projects");
+                  onSelectSection("projects");
                 }}
                 className="tactile-btn inline-flex items-center gap-2 min-h-[46px] px-5 rounded-full bg-[#252428] border border-white/12 text-[#f4f1ea] text-[13.5px] font-medium hover:border-[#dfd0a6]/50 hover:text-[#dfd0a6] cursor-pointer"
               >

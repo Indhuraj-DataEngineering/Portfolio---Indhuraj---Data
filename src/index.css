@@ -30,6 +30,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 84px;
+    }
   }
 
   body {
@@ -148,6 +156,9 @@ dialog.portfolio-dialog::backdrop {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .tab-panel-enter {
     animation: none;
   }

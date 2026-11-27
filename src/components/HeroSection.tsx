@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import {
   HERO_CAPABILITIES,
-  PORTFOLIO_TABS,
   SITE_PROFILE,
   type CapabilityChip,
   type PortfolioTabId,
@@ -31,40 +30,16 @@ const iconMap: Record<CapabilityChip["iconKey"], LucideIcon> = {
 };
 
 interface HeroSectionProps {
-  activeTab: PortfolioTabId;
-  onSelectTab: (tab: PortfolioTabId) => void;
+  onSelectSection: (sectionId: PortfolioTabId) => void;
 }
 
-export function HeroSection({ activeTab, onSelectTab }: HeroSectionProps) {
+export function HeroSection({ onSelectSection }: HeroSectionProps) {
   return (
     <section
-      className="relative min-h-[calc(100dvh-132px)] flex flex-col justify-between py-8 sm:py-12 lg:py-14 overflow-hidden"
+      id="home"
+      className="relative scroll-mt-32 lg:scroll-mt-24 lg:min-h-[calc(100dvh-74px)] flex flex-col justify-between py-8 sm:py-12 lg:py-14 overflow-hidden"
       aria-labelledby="hero-heading"
     >
-      {/* Left-edge vertical dot navigation indicator (desktop) */}
-      <div
-        className="hidden xl:flex flex-col items-center gap-3 absolute left-6 top-1/2 -translate-y-1/2 z-10"
-        aria-label="Quick tab progress dots"
-      >
-        {PORTFOLIO_TABS.map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => onSelectTab(tab.id)}
-              title={tab.label}
-              aria-label={`Go to ${tab.label} section`}
-              className={`rounded-full transition-all cursor-pointer ${
-                isActive
-                  ? "w-2.5 h-2.5 bg-[#dfd0a6] shadow-[0_0_10px_rgba(223,207,164,0.65)]"
-                  : "w-1.5 h-1.5 bg-white/25 hover:bg-white/60"
-              }`}
-            />
-          );
-        })}
-      </div>
-
       {/* Main Split Grid */}
       <div className="max-w-[1380px] w-full mx-auto px-4 sm:px-6 lg:px-14 xl:px-20 flex-1 grid grid-cols-1 lg:grid-cols-12 items-center gap-10 lg:gap-8">
         {/* Left: Editorial Copy & Champagne Pill CTA */}
@@ -94,7 +69,7 @@ export function HeroSection({ activeTab, onSelectTab }: HeroSectionProps) {
               type="button"
               onClick={() => {
                 soundEngine.playChime();
-                onSelectTab("projects");
+                onSelectSection("projects");
               }}
               className="tactile-btn inline-flex items-center gap-2 min-h-[46px] px-7 rounded-full bg-[#dfd0a6] text-[#17171a] text-[13.5px] font-semibold shadow-[0_12px_30px_rgba(0,0,0,0.35)] hover:bg-[#e8dbb8] cursor-pointer"
             >
