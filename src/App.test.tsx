@@ -27,6 +27,8 @@ describe("Scrolling Portfolio Shell & Professional Content", () => {
       expect(text.endsWith(".")).toBe(false);
     });
 
+    expect(screen.getByText(/Smart Agriculture – Crop Yield Prediction/i)).toBeInTheDocument();
+
     const soundBtn = screen.getByRole("button", { name: /mute ui interaction sounds/i });
     expect(soundBtn).toHaveAttribute("aria-pressed", "true");
     fireEvent.click(soundBtn);

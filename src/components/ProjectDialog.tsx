@@ -46,7 +46,7 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
                   {project.index} · {project.category}
                 </span>
                 <span className="font-mono-tech text-[11px] text-[#b4b0a8]">
-                  Resume Verified Project
+                  {project.badgeLabel ?? "Resume Verified Project"}
                 </span>
               </div>
               <h3
@@ -66,6 +66,14 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
             >
               <X size={18} strokeWidth={1.75} />
             </button>
+          </div>
+
+          <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-[#dfd0a6]/25 bg-[#19181d] shadow-[0_14px_38px_rgba(0,0,0,0.42)]">
+            <img
+              src={project.imageUrl}
+              alt={project.imageAlt}
+              className="w-full h-full object-cover"
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

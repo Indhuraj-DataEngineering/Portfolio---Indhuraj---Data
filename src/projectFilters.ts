@@ -8,7 +8,7 @@ export interface Project {
   problem: string;
   contribution: string;
   stack: string[];
-  accent: "pipeline" | "document" | "analytics";
+  accent: "pipeline" | "document" | "analytics" | "agriculture";
 }
 
 export function filterProjects(projects: Project[], filter: ProjectFilter): Project[] {

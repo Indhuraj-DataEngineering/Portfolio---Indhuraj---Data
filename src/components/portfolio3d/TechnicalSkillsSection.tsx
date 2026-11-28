@@ -107,8 +107,8 @@ export const skillCategoriesData: SkillCategoryDef[] = [
     title: "Project Tools",
     icon: Workflow,
     description:
-      "Iterative notebook experimentation, version control, and interactive Streamlit deployment.",
-    tools: ["Jupyter Notebook", "Streamlit", "GitHub", "VS Code"],
+      "Iterative notebook experimentation, web API deployment, and version control across Flask and Streamlit.",
+    tools: ["Jupyter Notebook", "Flask", "Streamlit", "GitHub", "VS Code"],
     telemetry: {
       runtime: "jupyter_streamlit",
       usage: "app_deployment",

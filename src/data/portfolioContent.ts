@@ -34,6 +34,9 @@ export interface CaseStudyProject extends Project {
   id: string;
   index: string;
   subtitle: string;
+  imageUrl: string;
+  imageAlt: string;
+  badgeLabel?: string;
   metrics: { label: string; value: string }[];
   architecture: string[];
   deliverables: string[];
@@ -144,6 +147,8 @@ export const FEATURED_PROJECTS: CaseStudyProject[] = [
     index: "01",
     title: "Power BI Sales Analytics Capstone",
     subtitle: "Executive Revenue, Margin & Time-Intelligence Reporting",
+    imageUrl: "/images/projects/power-bi-sales-output.png",
+    imageAlt: "Power BI Sales Analytics Capstone dashboard output showing 9.19M total revenue, profit margin, MoM growth matrix, and category treemap",
     category: "Data Analytics",
     description:
       "Built an interactive Power BI business intelligence suite consolidating revenue, profit, cost, order volume, and customer behavior into a unified decision-making workspace.",
@@ -176,6 +181,8 @@ export const FEATURED_PROJECTS: CaseStudyProject[] = [
     index: "02",
     title: "Sales Performance & Interactive Excel Suite",
     subtitle: "9,994-Record Cleaning, PivotTable Modeling & KPI Workbook",
+    imageUrl: "/images/projects/excel-sales-output.png",
+    imageAlt: "Excel Sales Performance Dashboard output showing KPI summary cards, PivotTables, and category, state, and monthly trend charts",
     category: "Data Analytics",
     description:
       "Cleaned, audited, and analyzed 9,994 multi-year sales records in Microsoft Excel to uncover category margins, state-level demand pockets, and seasonal revenue patterns.",
@@ -208,6 +215,8 @@ export const FEATURED_PROJECTS: CaseStudyProject[] = [
     index: "03",
     title: "Tamil Movie Recommendation System",
     subtitle: "Pandas Feature Pipeline, Scikit-learn Similarity & Streamlit UI",
+    imageUrl: "/images/projects/tamil-movie-recommender-output.png",
+    imageAlt: "Tamil Movie Recommender Streamlit web interface displaying genre filters and movie recommendations for Leo (2023)",
     category: "Data Science",
     description:
       "Engineered an interactive recommendation application processing Tamil cinema metadata and user-rating datasets with Pandas, Scikit-learn, and a deployed Streamlit web interface.",
@@ -240,48 +249,38 @@ export const FEATURED_PROJECTS: CaseStudyProject[] = [
     id: "smart-agriculture-crop-yield",
     index: "04",
     title: "Smart Agriculture – Crop Yield Prediction",
-    subtitle: "End-to-End Machine Learning & Flask Deployment",
+    subtitle: "AgriPredict · 19,689-Record Regression Pipeline, Flask UI & Render Deployment",
+    imageUrl: "/images/projects/smart-agriculture-ml-output.png",
+    imageAlt: "AgriPredict Smart Agriculture live Flask web application showing the Crop Yield Predictor interface",
+    badgeLabel: "End-to-End ML · Live Flask App",
     category: "Data Science",
     description:
-      "Developed an end-to-end Machine Learning application to predict agricultural crop yield using historical agricultural data. Implemented data cleaning, EDA, outlier treatment, feature engineering, model comparison, and deployment.",
+      "Built an end-to-end Machine Learning regression app (AgriPredict) predicting crop yield across 19,689 historical agricultural records using Random Forest Regression (R² 0.9799), deployed with Flask on Render.",
     problem:
-      "Agricultural yield is influenced by multiple factors, including crop type, cultivation area, rainfall, fertilizer usage, pesticide usage, state, and season. Analyzing these factors together can help explore agricultural yield patterns.",
+      "Crop yield varies widely by crop type, cultivation year, season, state, rainfall, and agro-input intensity, requiring outlier hygiene and leakage-free feature engineering before reliable prediction.",
     contribution:
-      "Processed 19,689 agricultural records, performed exploratory analysis and preprocessing, engineered fertilizer-per-area and pesticide-per-area features, compared regression models, and deployed a Random Forest prediction application using Flask.",
+      "Cleaned and analyzed 19,689 records, treated outliers, engineered Fertilizer_per_Area and Pesticide_per_Area, excluded Production to prevent target leakage, benchmarked 4 regression models, and shipped a Flask prediction app on Render.",
     architecture: [
-      "Cleaned and processed agricultural data using Python, Pandas, and NumPy",
-      "Performed EDA, visualization, outlier detection, and treatment",
-      "Engineered fertilizer-per-area and pesticide-per-area features",
-      "Compared Linear Regression, Decision Tree, Random Forest, and Gradient Boosting models",
-      "Built and deployed a Flask-based crop yield prediction application",
+      "Cleaned 19,689 historical crop records across 8 operational inputs while excluding Production to prevent target leakage",
+      "Engineered area-normalized features (Fertilizer_per_Area, Pesticide_per_Area) and benchmarked Linear Regression, Decision Tree, Random Forest, and Gradient Boosting",
+      "Selected Random Forest Regressor (MAE: 9.4895, RMSE: 127.0180, R²: 0.9799) over tuned variants and served live predictions via Flask + Joblib on Render",
     ],
     deliverables: [
-      "Cleaned and feature-engineered agricultural dataset",
-      "Model comparison and evaluation using MAE, RMSE, and R²",
-      "Random Forest model selected with an evaluation R² score of 0.9799",
-      "Interactive crop yield prediction web application deployed on Render",
+      "Modular src/ ML workflow covering EDA, outlier treatment, training, and tuning",
+      "4-model regression comparison selecting Random Forest (R² 0.9799)",
+      "Live Flask prediction web application deployed on Render",
     ],
-    stack: [
-      "Python",
-      "Pandas",
-      "NumPy",
-      "Scikit-learn",
-      "Matplotlib",
-      "Seaborn",
-      "Flask",
-      "Render",
-    ],
+    stack: ["Python", "Pandas", "NumPy", "Scikit-learn", "Flask", "Joblib", "Render"],
     metrics: [
-      { label: "Dataset", value: "19,689 Records" },
-      { label: "Best Model", value: "Random Forest" },
-      { label: "Evaluation R²", value: "0.9799" },
+      { label: "Selected Model", value: "Random Forest (R² 0.9799)" },
+      { label: "Evaluation Error", value: "MAE 9.49 · RMSE 127.02" },
+      { label: "Dataset Scope", value: "19,689 Records" },
     ],
-    githubUrl:
-      "https://github.com/Indhuraj-DataEngineering/Smart_Agriculture_ML",
+    githubUrl: "https://github.com/Indhuraj-DataEngineering/Smart_Agriculture_ML",
     liveUrl: "https://smart-agriculture-ml-s67r.onrender.com",
     liveDemoNote:
-      "Deployed Flask application for interactive agricultural crop yield prediction.",
-    accent: "document",
+      "Live Flask ML app deployed on Render alongside full modular source code on GitHub. Metrics reflect project evaluation data.",
+    accent: "agriculture",
   },
 ];
 
