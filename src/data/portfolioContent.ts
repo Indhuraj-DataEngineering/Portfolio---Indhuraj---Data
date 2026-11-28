@@ -1,3 +1,4 @@
+
 import type { Project } from "../projectFilters";
 
 export type PortfolioTabId =
@@ -233,6 +234,53 @@ export const FEATURED_PROJECTS: CaseStudyProject[] = [
     githubUrl: "https://github.com/Indhuraj-DataEngineering/tamil-movie-recommender",
     liveUrl: "https://tamil-movie-recommender-indhuraj.streamlit.app/",
     liveDemoNote: "Interactive Streamlit app is deployed live alongside the GitHub source repository.",
+    accent: "document",
+  },
+  {
+    id: "smart-agriculture-crop-yield",
+    index: "04",
+    title: "Smart Agriculture – Crop Yield Prediction",
+    subtitle: "End-to-End Machine Learning & Flask Deployment",
+    category: "Data Science",
+    description:
+      "Developed an end-to-end Machine Learning application to predict agricultural crop yield using historical agricultural data. Implemented data cleaning, EDA, outlier treatment, feature engineering, model comparison, and deployment.",
+    problem:
+      "Agricultural yield is influenced by multiple factors, including crop type, cultivation area, rainfall, fertilizer usage, pesticide usage, state, and season. Analyzing these factors together can help explore agricultural yield patterns.",
+    contribution:
+      "Processed 19,689 agricultural records, performed exploratory analysis and preprocessing, engineered fertilizer-per-area and pesticide-per-area features, compared regression models, and deployed a Random Forest prediction application using Flask.",
+    architecture: [
+      "Cleaned and processed agricultural data using Python, Pandas, and NumPy",
+      "Performed EDA, visualization, outlier detection, and treatment",
+      "Engineered fertilizer-per-area and pesticide-per-area features",
+      "Compared Linear Regression, Decision Tree, Random Forest, and Gradient Boosting models",
+      "Built and deployed a Flask-based crop yield prediction application",
+    ],
+    deliverables: [
+      "Cleaned and feature-engineered agricultural dataset",
+      "Model comparison and evaluation using MAE, RMSE, and R²",
+      "Random Forest model selected with an evaluation R² score of 0.9799",
+      "Interactive crop yield prediction web application deployed on Render",
+    ],
+    stack: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "Matplotlib",
+      "Seaborn",
+      "Flask",
+      "Render",
+    ],
+    metrics: [
+      { label: "Dataset", value: "19,689 Records" },
+      { label: "Best Model", value: "Random Forest" },
+      { label: "Evaluation R²", value: "0.9799" },
+    ],
+    githubUrl:
+      "https://github.com/Indhuraj-DataEngineering/Smart_Agriculture_ML",
+    liveUrl: "https://smart-agriculture-ml-s67r.onrender.com",
+    liveDemoNote:
+      "Deployed Flask application for interactive agricultural crop yield prediction.",
     accent: "document",
   },
 ];
